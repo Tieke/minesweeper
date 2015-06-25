@@ -1,17 +1,33 @@
-function Minesweeper() {
-	this.gameboard = this.generateBoard();
+function Minesweeper(side_length) {
+	this.gameboard = this.generateBoard(side_length);
 	this.directions = [[-1, -1], [-1, 0], [-1, 1], [0, -1], [0, 1], [1, -1], [1, 0], [1, 1]];
 }
 
+Minesweeper.prototype.prepareBoard = function(bomb_ratio) {
+	this.addBombsToBoard(bomb_ratio);
+	this.populateBoard();
+	this.renderBoard();
+}
 
-Minesweeper.prototype.generateBoard = function() {
-	var board = [
-				[0, 'b', 0],
-				['b', 0, 0],
-				[0, 0, 0]
-			];
+Minesweeper.prototype.generateBoard = function(side_length) {
+	var board = new Array();
+		for ( i = 0; i < side_length; i++ ) {
+			board.push(new Array(side_length));
+		}
 
 	return board;
+};
+
+Minesweeper.prototype.addBombsToBoard = function(bomb_ratio) {
+	for ( i = 0; i < this.gameboard.length; i++ ) {
+		for ( j = 0; j < this.gameboard[i].length; j++ ) {
+			if (Math.random() > (1 - bomb_ratio)) {
+				this.gameboard[i][j] = 'b';
+			} else {
+				this.gameboard[i][j] = 0;
+			}
+		}
+	}
 };
 
 Minesweeper.prototype.populateBoard = function() {
@@ -101,6 +117,26 @@ Minesweeper.prototype.isInBounds = function(row, column) {
   return row >= 0 && row < this.gameboard.length && column >= 0 && column < this.gameboard.length;
 };
 
+var timer = new (function() {
+    var $stopwatch, 
+        incrementTime = 70, 
+        currentTime = 0,
+        updateTimer = function() {
+            $stopwatch.html(formatTime(currentTime));
+            currentTime += incrementTime / 10;
+        },
+        init = function() {
+            $stopwatch = $('#stopwatch');
+            timer.Timer = $.timer(updateTimer, incrementTime, true);
+        };
+    this.resetStopwatch = function() {
+        currentTime = 0;
+        this.Timer.stop().once();
+    };
+    $(init);
+});
+
+
 Minesweeper.prototype.unCoverClearSquares = function(row, column) {
 	var square = this.gameboard[row][column];
 	console.log("In function")
@@ -115,10 +151,7 @@ Minesweeper.prototype.unCoverClearSquares = function(row, column) {
 };
 
 Minesweeper.prototype.findCoordinates = function(current_this) {
-	// Find the x and y coordinates of the click cell - this
-	// this has cell id
 	var cell_id_temp = $(current_this).attr('class')
-	// parent has row id
 	var cell_id = "cell" + (cell_id_temp[4]) + (cell_id_temp[5])
 	var row_id = $(current_this).parent().attr('id');
 	return cell_id, row_id
@@ -126,25 +159,30 @@ Minesweeper.prototype.findCoordinates = function(current_this) {
 
 
 $(document).ready(function (){
-	var minesweeper = new Minesweeper();
-	// console.log(minesweeper.gameboard);
-	minesweeper.populateBoard();
-	// console.log(minesweeper.gameboard)
-	minesweeper.renderBoard();
-	// console.log(minesweeper.countBombsSurroundingSquare(0,0));
+
+	$('#beginner').on('click', function(e){
+		e.preventDefault();
+		var minesweeper = new Minesweeper(8);
+		minesweeper.prepareBoard(0.15625);
+	});
+
+	$('#intermediate').on('click', function(e){
+		e.preventDefault();
+		var minesweeper = new Minesweeper(16);
+		minesweeper.prepareBoard(0.15625);
+	});
 
 	$('#board').on('mousedown', '.unclicked', function (event){
-
 		if (event.which === 1){
 			$('#face').css('background-image','url(images/faceSmile.jpg)');
 			$(this).removeClass('unclicked').addClass('clicked');
-			minesweeper.findCoordinates($(this));
-			// minesweeper.unCoverClearSquares($(this));
 			if ($(this).hasClass('bomb')){
 				$('#face').css('background-image','url(images/faceLose.jpg)');
 				$('.bomb').show()
 				alert('YOU LOSE')
 			};
+			minesweeper.findCoordinates($(this));
+			minesweeper.unCoverClearSquares($(this));
 			if ($(this).hasClass()){
 				$(this).show();
 			};
