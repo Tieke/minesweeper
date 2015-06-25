@@ -1,17 +1,29 @@
-function Minesweeper() {
-	this.gameboard = this.generateBoard();
+function Minesweeper(side_length) {
+	this.gameboard = this.generateBoard(side_length);
 	this.directions = [[-1, -1], [-1, 0], [-1, 1], [0, -1], [0, 1], [1, -1], [1, 0], [1, 1]];
 }
 
-
-Minesweeper.prototype.generateBoard = function() {
-	var board = [
-				[0, 'b', 0],
-				['b', 0, 0],
-				[0, 0, 0]
-			];
+Minesweeper.prototype.generateBoard = function(side_length) {
+	var board = new Array();
+	console.log(board);
+		for ( i = 0; i < side_length; i++ ) {
+			board.push(new Array(side_length));
+		}
+	console.log(board);
 
 	return board;
+};
+
+Minesweeper.prototype.addBombsToBoard = function() {
+	for ( i = 0; i < this.gameboard.length; i++ ) {
+		for ( j = 0; j < this.gameboard[i].length; j++ ) {
+			if (Math.random() > 0.9) {
+				this.gameboard[i][j] = 'b';
+			} else {
+				this.gameboard[i][j] = 0;
+			}
+		}
+	}
 };
 
 Minesweeper.prototype.populateBoard = function() {
@@ -102,8 +114,9 @@ Minesweeper.prototype.isInBounds = function(row, column) {
 
 
 $(document).ready(function (){
-	var minesweeper = new Minesweeper();
+	var minesweeper = new Minesweeper(5);
 	console.log(minesweeper.gameboard);
+	minesweeper.addBombsToBoard();
 	minesweeper.populateBoard();
 	console.log(minesweeper.gameboard)
 	minesweeper.renderBoard();
