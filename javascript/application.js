@@ -12,10 +12,10 @@ Minesweeper.prototype.generateBoard = function(side_length) {
 	return board;
 };
 
-Minesweeper.prototype.addBombsToBoard = function() {
+Minesweeper.prototype.addBombsToBoard = function(bomb_ratio) {
 	for ( i = 0; i < this.gameboard.length; i++ ) {
 		for ( j = 0; j < this.gameboard[i].length; j++ ) {
-			if (Math.random() > 0.85) {
+			if (Math.random() > (1 - bomb_ratio)) {
 				this.gameboard[i][j] = 'b';
 			} else {
 				this.gameboard[i][j] = 0;
@@ -126,33 +126,36 @@ Minesweeper.prototype.unCoverClearSquares = function(row, column) {
 
 
 $(document).ready(function (){
-	var minesweeper = new Minesweeper(5);
-	minesweeper.addBombsToBoard();
-	minesweeper.populateBoard();
-	minesweeper.renderBoard();
 
-	$('#board').on('mousedown', '.unclicked', function (event){
+	$('#beginner').on('click', function(e){
+		e.preventDefault();
+		var minesweeper = new Minesweeper(8);
+		minesweeper.addBombsToBoard(0.15625);
+		minesweeper.populateBoard();
+		minesweeper.renderBoard();
 
-		if (event.which === 1){
-			$('#face').css('background-image','url(images/faceSmile.jpg)');
-			$(this).removeClass('unclicked').addClass('clicked');
-			console.log($(this))
-			minesweeper.unCoverClearSquares($(this));
-			if ($(this).hasClass('bomb')){
-				$('#face').css('background-image','url(images/faceLose.jpg)');
-				$('.bomb').show()
-				alert('YOU LOSE')
-			};
-			if ($(this).hasClass()){
-				$(this).show();
-			};
-		}
-	    if (event.which === 3){
-	    	$('#face').css('background-image','url(images/faceO.jpg)');
-        	if ($(this).hasClass('unclicked')){
-        		$(this).toggleClass('flag');
-        	}
-    	}
+		$('#board').on('mousedown', '.unclicked', function (event){
+			if (event.which === 1){
+				$('#face').css('background-image','url(images/faceSmile.jpg)');
+				$(this).removeClass('unclicked').addClass('clicked');
+				if ($(this).hasClass('bomb')){
+					$('#face').css('background-image','url(images/faceLose.jpg)');
+					$('.bomb').show()
+					alert('YOU LOSE')
+				};
+				console.log($(this))
+				minesweeper.unCoverClearSquares($(this));
+				if ($(this).hasClass()){
+					$(this).show();
+				};
+			}
+		    if (event.which === 3){
+		    	$('#face').css('background-image','url(images/faceO.jpg)');
+	        	if ($(this).hasClass('unclicked')){
+	        		$(this).toggleClass('flag');
+	        	}
+	    	}
+		});
 	});
 
 });
