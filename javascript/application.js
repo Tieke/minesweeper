@@ -1,5 +1,6 @@
 function Minesweeper() {
-
+	this.gameboard = this.generateBoard();
+	this.directions = [[-1, -1], [-1, 0], [-1, 1], [0, -1], [0, 1], [1, -1], [1, 0], [1, 1]];
 }
 
 
@@ -13,13 +14,12 @@ Minesweeper.prototype.generateBoard = function() {
 }
 
 
-
-Minesweeper.prototype.renderBoard = function(board) {
+Minesweeper.prototype.renderBoard = function() {
 	var printedBoard = "";
-	for (i=0; i<board.length; i++) {
+	for (i=0; i<this.gameboard.length; i++) {
 		printedBoard += "<div id='row" + (i+1) + "'>";
-		for (j=0;j<board[i].length; j++) {
-			switch(board[i][j]){
+		for (j=0;j<this.gameboard[i].length; j++) {
+			switch(this.gameboard[i][j]){
 				case 0:
 				printedBoard += "<div class='unclicked zero'></div>";
 				break;
@@ -57,10 +57,44 @@ Minesweeper.prototype.renderBoard = function(board) {
 	$('#board').append(printedBoard);
 }
 
+
+Minesweeper.prototype.squareContainsBomb = function(row, column) {
+	if ( this.gameboard[row][column] === 'b' ) {
+		return true;
+	} else {
+		return false;
+	}
+};
+
+
+Minesweeper.prototype.countBombsSurroundingSquare = function(row, column) {
+	var square = this.gameboard[row][column];
+	var neighboursWithBombs = 0;
+
+	for ( var i = 0; i < this.directions.length; i++ ) {
+		var direction = this.directions[i];
+		var directRow = direction[0];
+		var directColumn = direction[1];
+
+		if (this.isInBounds(row + directRow, column + directColumn)) {
+			if (this.squareContainsBomb([row + directRow], [column + directColumn])) {
+				neighboursWithBombs++;
+			}
+		}
+	}
+	return neighboursWithBombs;
+};
+
+
+Minesweeper.prototype.isInBounds = function(row, column) {
+  return row >= 0 && row < this.gameboard.length && column >= 0 && column < this.gameboard.length;
+};
+
+
 $(document).ready(function (){
 	var minesweeper = new Minesweeper();
-	var gameboard = minesweeper.generateBoard();
-	minesweeper.renderBoard(gameboard);
+	minesweeper.renderBoard();
+	console.log(minesweeper.countBombsSurroundingSquare(0,0));
 
 	$('#board').on('mousedown', '.unclicked', function (event){
 
@@ -73,11 +107,11 @@ $(document).ready(function (){
 			if ($(this).hasClass()){
 				$(this).show();
 			};
-		}		
+		}
 	    if (event.which === 3){
         	if ($(this).hasClass('unclicked')){
         		$(this).toggleClass('flag');
-        	}  
+        	}
     	}
 	});
 
