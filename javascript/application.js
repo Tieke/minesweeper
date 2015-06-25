@@ -6,9 +6,10 @@ function Minesweeper() {
 
 Minesweeper.prototype.generateBoard = function() {
 	var board = [
-				[2,'b',2],
-				['b',2,1],
-				[1,1,0]
+				[2,'b',1,0],
+				['b',2,1,0],
+				[1,1,0,0],
+				[0,0,0,0]
 				];
 				return board;
 }
@@ -90,11 +91,25 @@ Minesweeper.prototype.isInBounds = function(row, column) {
   return row >= 0 && row < this.gameboard.length && column >= 0 && column < this.gameboard.length;
 };
 
+Minesweeper.prototype.unCoverClearSquares = function(row, column) {
+	var square = this.gameboard[row][column];
+	console.log("In function")
+	for ( var i= 0; i <= this.directions.length; i++) {
+
+		if (this.neighboursWithBombs == 0) {// No neightbours has any bombs 
+			$(this).removeClass('unclicked').addClass('clicked')
+			unCoverClearSquares($(this));
+		};
+
+	};
+};
+
 
 $(document).ready(function (){
 	var minesweeper = new Minesweeper();
 	minesweeper.renderBoard();
 	console.log(minesweeper.countBombsSurroundingSquare(0,0));
+	minesweeper.unCoverClearSquares(3,3);
 
 	$('#board').on('mousedown', '.unclicked', function (event){
 
