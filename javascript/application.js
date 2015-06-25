@@ -1,6 +1,7 @@
 function Minesweeper(side_length) {
 	this.gameboard = this.generateBoard(side_length);
 	this.directions = [[-1, -1], [-1, 0], [-1, 1], [0, -1], [0, 1], [1, -1], [1, 0], [1, 1]];
+	this.bombsLeftOnBoard = 0;
 }
 
 Minesweeper.prototype.prepareBoard = function(bomb_ratio) {
@@ -23,6 +24,7 @@ Minesweeper.prototype.addBombsToBoard = function(bomb_ratio) {
 		for ( j = 0; j < this.gameboard[i].length; j++ ) {
 			if (Math.random() > (1 - bomb_ratio)) {
 				this.gameboard[i][j] = 'b';
+				this.bombsLeftOnBoard += 1;
 			} else {
 				this.gameboard[i][j] = 0;
 			}
@@ -84,7 +86,6 @@ Minesweeper.prototype.renderBoard = function() {
 	$('#board').append(printedBoard);
 }
 
-
 Minesweeper.prototype.squareContainsBomb = function(row, column) {
 	if ( this.gameboard[row][column] === 'b' ) {
 		return true;
@@ -118,8 +119,8 @@ Minesweeper.prototype.isInBounds = function(row, column) {
 };
 
 var timer = new (function() {
-    var $stopwatch, 
-        incrementTime = 70, 
+    var $stopwatch,
+        incrementTime = 70,
         currentTime = 0,
         updateTimer = function() {
             $stopwatch.html(formatTime(currentTime));
@@ -142,7 +143,7 @@ Minesweeper.prototype.unCoverClearSquares = function(row, column) {
 	console.log("In function")
 	for ( var i= 0; i <= this.directions.length; i++) {
 
-		if (minesweeper.countBombsSurroundingSquare(row, column) == 0) {// No neightbours has any bombs 
+		if (minesweeper.countBombsSurroundingSquare(row, column) == 0) {// No neightbours has any bombs
 			$(this).removeClass('unclicked').addClass('clicked')
 			unCoverClearSquares($(this));
 		};
@@ -159,16 +160,24 @@ Minesweeper.prototype.findCoordinates = function(current_this) {
 
 
 $(document).ready(function (){
+	var minesweeper;
+
+	// Small beginner board for testing
+	// $('#beginner').on('click', function(e){
+	// 	e.preventDefault();
+	// 	minesweeper = new Minesweeper(3);
+	// 	minesweeper.prepareBoard(0.15625);
+	// });
 
 	$('#beginner').on('click', function(e){
 		e.preventDefault();
-		var minesweeper = new Minesweeper(8);
+		minesweeper = new Minesweeper(8);
 		minesweeper.prepareBoard(0.15625);
 	});
 
 	$('#intermediate').on('click', function(e){
 		e.preventDefault();
-		var minesweeper = new Minesweeper(16);
+		minesweeper = new Minesweeper(16);
 		minesweeper.prepareBoard(0.15625);
 	});
 
@@ -191,6 +200,13 @@ $(document).ready(function (){
 	    	$('#face').css('background-image','url(images/faceO.jpg)');
         	if ($(this).hasClass('unclicked')){
         		$(this).toggleClass('flag');
+        		if ($(this).hasClass('bomb')){
+        			minesweeper.bombsLeftOnBoard -= 1;
+        			if ( minesweeper.bombsLeftOnBoard === 0 ) {
+        				alert("Congratulations! You've won!");
+        				$('#face').css('background-image','url(images/faceWin.jpg)');
+        			}
+        		}
         	}
     	}
 	});
