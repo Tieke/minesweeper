@@ -6,13 +6,23 @@ function Minesweeper() {
 
 Minesweeper.prototype.generateBoard = function() {
 	var board = [
-				[2,'b',2],
-				['b',2,1],
-				[1,1,0]
-				];
-				return board;
-}
+				[0, 'b', 0],
+				['b', 0, 0],
+				[0, 0, 0]
+			];
 
+	return board;
+};
+
+Minesweeper.prototype.populateBoard = function() {
+	for ( i = 0; i < this.gameboard.length; i++ ) {
+		for ( j = 0; j < this.gameboard[i].length; j++ ) {
+			if ( this.gameboard[i][j] !== 'b' ) {
+				this.gameboard[i][j] = this.countBombsSurroundingSquare(i, j);
+			}
+		}
+	}
+};
 
 Minesweeper.prototype.renderBoard = function() {
 	var printedBoard = "";
@@ -93,6 +103,9 @@ Minesweeper.prototype.isInBounds = function(row, column) {
 
 $(document).ready(function (){
 	var minesweeper = new Minesweeper();
+	console.log(minesweeper.gameboard);
+	minesweeper.populateBoard();
+	console.log(minesweeper.gameboard)
 	minesweeper.renderBoard();
 	console.log(minesweeper.countBombsSurroundingSquare(0,0));
 
