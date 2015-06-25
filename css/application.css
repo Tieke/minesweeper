@@ -13,7 +13,7 @@
 #row1, #row2, #row3 {
 	width:  100%;
 
-} 
+}
 
 .unclicked {
 	background-color: gray;
@@ -22,44 +22,66 @@
 .bomb.clicked {
 	background-color: red;
 	background-image: url('../images/bomb.jpg');
+	background-position: center;
+	background-repeat: no-repeat;
 }
 
 .flag.unclicked {
 	background-image: url('../images/flag.jpg');
+	background-position: center;
+	background-repeat: no-repeat;
 }
 
 .one.clicked {
 	background-image: url('../images/one.jpg');
+	background-position: center;
+	background-repeat: no-repeat;
 }
 
 .two.clicked {
 	background-image: url('../images/two.jpg');
+	background-position: center;
+	background-repeat: no-repeat;
 }
 
 .three.clicked {
 	background-image: url('../images/three.jpg');
+	background-position: center;
+	background-repeat: no-repeat;
 }
 
 .four.clicked {
 	background-image: url('../images/four.jpg');
+	background-position: center;
+	background-repeat: no-repeat;
 }
 
-.five.clicked {	
+.five.clicked {
 	background-image: url('../images/five.jpg');
+	background-position: center;
+	background-repeat: no-repeat;
 }
 
 .six.clicked {
 	background-image: url('../images/six.jpg');
+	background-position: center;
+	background-repeat: no-repeat;
 }
 
 .seven.clicked {
 	background-image: url('../images/seven.jpg');
+	background-position: center;
+	background-repeat: no-repeat;
 }
 
-.eight.clicked {	
+.eight.clicked {
 	background-image: url('../images/eight.jpg');
+	background-position: center;
+	background-repeat: no-repeat;
 }
 
 .zero.clicked {
 	background-image: url('../images/clicked.jpg');
+	background-position: center;
+	background-repeat: no-repeat;
 }
