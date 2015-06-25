@@ -16,10 +16,8 @@ Minesweeper.prototype.generateBoard = function() {
 
 Minesweeper.prototype.renderBoard = function(board) {
 	var printedBoard = "";
-	console.log(board.length);
 	for (i=0; i<board.length; i++) {
 		printedBoard += "<div id='row" + (i+1) + "'>";
-	console.log("1");
 		for (j=0;j<board[i].length; j++) {
 			switch(board[i][j]){
 				case 0:
@@ -55,8 +53,6 @@ Minesweeper.prototype.renderBoard = function(board) {
 			}
 		}
 		printedBoard += "</div>";
-		console.log("Look at me");
-		console.log(printedBoard);
 	}
 	$('#board').append(printedBoard);
 }
@@ -64,28 +60,23 @@ Minesweeper.prototype.renderBoard = function(board) {
 $(document).ready(function (){
 	var minesweeper = new Minesweeper();
 	var gameboard = minesweeper.generateBoard();
-	console.log(gameboard);
 	minesweeper.renderBoard(gameboard);
 
-	$('.board').on('click', '.unclicked', function (event){
+	$('#board').on('click', '.unclicked', function (event){
 		switch (event.which) {
 	        case 1:
-				// change class from .unclicked to .clicked
-				$(this).switchClass('unclicked', 'clicked')
-				// if has class bomb >> lose game
+				$(this).removeClass('unclicked').addClass('clicked');
 				if ($(this).hasClass('bomb')){
 					$('.bomb').show()
 					alert('YOU LOSE')
 				};
-				// show() what is in that square
 				if ($(this).hasClass()){
 					$(this).show();
 				};
 	            break;
 	        case 3:
-	        	// only if has class unclicked
+	        	event.preventDefault();
 	        	if ($(this).hasClass('unclicked')){
-	        		// add class flag, toggle
 	        		$('.flag').toggle();
 	        	}
 	            break;
@@ -95,15 +86,3 @@ $(document).ready(function (){
 	});
 
 });
-
-// css classes: 
-// - bomb
-// - number of bombs: one, two etc.
-// - guess
-// - flag
-// - clicked
-// - unclicked
-// - row1
-// - row2
-// - row3
-// - board
