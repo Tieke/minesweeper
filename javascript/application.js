@@ -117,6 +117,26 @@ Minesweeper.prototype.isInBounds = function(row, column) {
   return row >= 0 && row < this.gameboard.length && column >= 0 && column < this.gameboard.length;
 };
 
+var timer = new (function() {
+    var $stopwatch, 
+        incrementTime = 70, 
+        currentTime = 0,
+        updateTimer = function() {
+            $stopwatch.html(formatTime(currentTime));
+            currentTime += incrementTime / 10;
+        },
+        init = function() {
+            $stopwatch = $('#stopwatch');
+            timer.Timer = $.timer(updateTimer, incrementTime, true);
+        };
+    this.resetStopwatch = function() {
+        currentTime = 0;
+        this.Timer.stop().once();
+    };
+    $(init);
+});
+
+
 Minesweeper.prototype.unCoverClearSquares = function(row, column) {
 	var square = this.gameboard[row][column];
 	console.log("In function")
@@ -129,7 +149,6 @@ Minesweeper.prototype.unCoverClearSquares = function(row, column) {
 
 	};
 };
-
 
 $(document).ready(function (){
 
@@ -149,12 +168,12 @@ $(document).ready(function (){
 		if (event.which === 1){
 			$('#face').css('background-image','url(images/faceSmile.jpg)');
 			$(this).removeClass('unclicked').addClass('clicked');
+
 			if ($(this).hasClass('bomb')){
 				$('#face').css('background-image','url(images/faceLose.jpg)');
 				$('.bomb').show()
 				alert('YOU LOSE')
 			};
-			console.log($(this))
 			minesweeper.unCoverClearSquares($(this));
 			if ($(this).hasClass()){
 				$(this).show();
