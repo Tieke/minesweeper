@@ -24,8 +24,8 @@
 	background-image: url('../images/bomb.jpg');
 }
 
-.flag {
-	background-color: green; 
+.flag.unclicked {
+	background-image: url('../images/flag.jpg');
 }
 
 .one.clicked {
