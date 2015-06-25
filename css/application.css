@@ -1,7 +1,7 @@
 .unclicked, .clicked {
 	border: 1px solid black;
-	width: 50px;
-	height: 50px;
+	width: 30px;
+	height: 30px;
 	display: inline-block;
 }
 
@@ -16,10 +16,9 @@
 }
 
 #board {
-	width: 50%;
 	height: 100%;
-	margin-left: 44%;
-  	margin-top: 100px;
+	margin-left: 10%;
+	margin-top: 100px;
 }
 
 #row1, #row2, #row3 {
@@ -27,75 +26,68 @@
 
 }
 
-.unclicked {
-	background-image: url('../images/unclicked.jpg');
+.unclicked,
+.bomb.clicked,
+.flag.unclicked,
+.one.clicked,
+.two.clicked,
+.three.clicked,
+.four.clicked,
+.five.clicked,
+.six.clicked,
+.seven.clicked,
+.eight.clicked,
+.zero.clicked {
 	background-position: center;
 	background-repeat: no-repeat;
+	background-size: cover;
+}
+
+.unclicked {
+	background-image: url('../images/unclicked.jpg');
 }
 
 .bomb.clicked {
 	background-color: red;
 	background-image: url('../images/bomb.jpg');
-	background-position: center;
-	background-repeat: no-repeat;
 }
 
 .flag.unclicked {
 	background-image: url('../images/flag.jpg');
-	background-position: center;
-	background-repeat: no-repeat;
 }
 
 .one.clicked {
 	background-image: url('../images/one.jpg');
-	background-position: center;
-	background-repeat: no-repeat;
 }
 
 .two.clicked {
 	background-image: url('../images/two.jpg');
-	background-position: center;
-	background-repeat: no-repeat;
 }
 
 .three.clicked {
 	background-image: url('../images/three.jpg');
-	background-position: center;
-	background-repeat: no-repeat;
 }
 
 .four.clicked {
 	background-image: url('../images/four.jpg');
-	background-position: center;
-	background-repeat: no-repeat;
 }
 
 .five.clicked {
 	background-image: url('../images/five.jpg');
-	background-position: center;
-	background-repeat: no-repeat;
 }
 
 .six.clicked {
 	background-image: url('../images/six.jpg');
-	background-position: center;
-	background-repeat: no-repeat;
 }
 
 .seven.clicked {
 	background-image: url('../images/seven.jpg');
-	background-position: center;
-	background-repeat: no-repeat;
 }
 
 .eight.clicked {
 	background-image: url('../images/eight.jpg');
-	background-position: center;
-	background-repeat: no-repeat;
 }
 
 .zero.clicked {
 	background-image: url('../images/clicked.jpg');
-	background-position: center;
-	background-repeat: no-repeat;
 }
