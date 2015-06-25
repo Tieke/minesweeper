@@ -17,7 +17,7 @@ Minesweeper.prototype.generateBoard = function(side_length) {
 Minesweeper.prototype.addBombsToBoard = function() {
 	for ( i = 0; i < this.gameboard.length; i++ ) {
 		for ( j = 0; j < this.gameboard[i].length; j++ ) {
-			if (Math.random() > 0.9) {
+			if (Math.random() > 0.85) {
 				this.gameboard[i][j] = 'b';
 			} else {
 				this.gameboard[i][j] = 0;
@@ -118,7 +118,7 @@ Minesweeper.prototype.unCoverClearSquares = function(row, column) {
 	console.log("In function")
 	for ( var i= 0; i <= this.directions.length; i++) {
 
-		if (countBombsSurroundingSquare == 0) {// No neightbours has any bombs 
+		if (countBombsSurroundingSquare == 0) {// No neightbours has any bombs
 			$(this).removeClass('unclicked').addClass('clicked')
 			unCoverClearSquares($(this));
 		};
