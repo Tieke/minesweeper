@@ -5,11 +5,9 @@ function Minesweeper(side_length) {
 
 Minesweeper.prototype.generateBoard = function(side_length) {
 	var board = new Array();
-	console.log(board);
 		for ( i = 0; i < side_length; i++ ) {
 			board.push(new Array(side_length));
 		}
-	console.log(board);
 
 	return board;
 };
@@ -129,12 +127,9 @@ Minesweeper.prototype.unCoverClearSquares = function(row, column) {
 
 $(document).ready(function (){
 	var minesweeper = new Minesweeper(5);
-	console.log(minesweeper.gameboard);
 	minesweeper.addBombsToBoard();
 	minesweeper.populateBoard();
-	console.log(minesweeper.gameboard)
 	minesweeper.renderBoard();
-	console.log(minesweeper.countBombsSurroundingSquare(0,0));
 
 	$('#board').on('mousedown', '.unclicked', function (event){
 
