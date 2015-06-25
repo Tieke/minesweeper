@@ -3,6 +3,12 @@ function Minesweeper(side_length) {
 	this.directions = [[-1, -1], [-1, 0], [-1, 1], [0, -1], [0, 1], [1, -1], [1, 0], [1, 1]];
 }
 
+Minesweeper.prototype.prepareBoard = function(bomb_ratio) {
+	this.addBombsToBoard(bomb_ratio);
+	this.populateBoard();
+	this.renderBoard();
+}
+
 Minesweeper.prototype.generateBoard = function(side_length) {
 	var board = new Array();
 		for ( i = 0; i < side_length; i++ ) {
@@ -130,32 +136,36 @@ $(document).ready(function (){
 	$('#beginner').on('click', function(e){
 		e.preventDefault();
 		var minesweeper = new Minesweeper(8);
-		minesweeper.addBombsToBoard(0.15625);
-		minesweeper.populateBoard();
-		minesweeper.renderBoard();
+		minesweeper.prepareBoard(0.15625);
+	});
 
-		$('#board').on('mousedown', '.unclicked', function (event){
-			if (event.which === 1){
-				$('#face').css('background-image','url(images/faceSmile.jpg)');
-				$(this).removeClass('unclicked').addClass('clicked');
-				if ($(this).hasClass('bomb')){
-					$('#face').css('background-image','url(images/faceLose.jpg)');
-					$('.bomb').show()
-					alert('YOU LOSE')
-				};
-				console.log($(this))
-				minesweeper.unCoverClearSquares($(this));
-				if ($(this).hasClass()){
-					$(this).show();
-				};
-			}
-		    if (event.which === 3){
-		    	$('#face').css('background-image','url(images/faceO.jpg)');
-	        	if ($(this).hasClass('unclicked')){
-	        		$(this).toggleClass('flag');
-	        	}
-	    	}
-		});
+	$('#intermediate').on('click', function(e){
+		e.preventDefault();
+		var minesweeper = new Minesweeper(16);
+		minesweeper.prepareBoard(0.15625);
+	});
+
+	$('#board').on('mousedown', '.unclicked', function (event){
+		if (event.which === 1){
+			$('#face').css('background-image','url(images/faceSmile.jpg)');
+			$(this).removeClass('unclicked').addClass('clicked');
+			if ($(this).hasClass('bomb')){
+				$('#face').css('background-image','url(images/faceLose.jpg)');
+				$('.bomb').show()
+				alert('YOU LOSE')
+			};
+			console.log($(this))
+			minesweeper.unCoverClearSquares($(this));
+			if ($(this).hasClass()){
+				$(this).show();
+			};
+		}
+	    if (event.which === 3){
+	    	$('#face').css('background-image','url(images/faceO.jpg)');
+        	if ($(this).hasClass('unclicked')){
+        		$(this).toggleClass('flag');
+        	}
+    	}
 	});
 
 });
