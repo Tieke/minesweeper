@@ -15,7 +15,51 @@
 
 } 
 
-
 .unclicked {
-	background-color: grey;
+	background-color: gray;
+}
+
+.bomb.clicked {
+	background-color: red;
+	background-image: url('../images/bomb.jpg');
+}
+
+.flag {
+	background-color: green; 
+}
+
+.one.clicked {
+	background-image: url('../images/one.jpg');
+}
+
+.two.clicked {
+	background-image: url('../images/two.jpg');
+}
+
+.three.clicked {
+	background-image: url('../images/three.jpg');
+}
+
+.four.clicked {
+	background-image: url('../images/four.jpg');
+}
+
+.five.clicked {	
+	background-image: url('../images/five.jpg');
+}
+
+.six.clicked {
+	background-image: url('../images/six.jpg');
+}
+
+.seven.clicked {
+	background-image: url('../images/seven.jpg');
+}
+
+.eight.clicked {	
+	background-image: url('../images/eight.jpg');
+}
+
+.zero.clicked {
+	background-image: url('../images/clicked.jpg');
 }
