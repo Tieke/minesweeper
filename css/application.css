@@ -11,6 +11,8 @@
 	margin-left: 46.5%;
   	margin-top: 100px;
 	background-image: url('../images/faceSmile.jpg');
+	background-position: center;
+	background-repeat: no-repeat;
 }
 
 #board {
@@ -26,7 +28,9 @@
 }
 
 .unclicked {
-	background-color: gray;
+	background-image: url('../images/unclicked.jpg');
+	background-position: center;
+	background-repeat: no-repeat;
 }
 
 .bomb.clicked {

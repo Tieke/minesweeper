@@ -99,8 +99,10 @@ $(document).ready(function (){
 	$('#board').on('mousedown', '.unclicked', function (event){
 
 		if (event.which === 1){
+			$('#face').css('background-image','url(images/faceSmile.jpg)');
 			$(this).removeClass('unclicked').addClass('clicked');
 			if ($(this).hasClass('bomb')){
+				$('#face').css('background-image','url(images/faceLose.jpg)');
 				$('.bomb').show()
 				alert('YOU LOSE')
 			};
@@ -109,6 +111,7 @@ $(document).ready(function (){
 			};
 		}
 	    if (event.which === 3){
+	    	$('#face').css('background-image','url(images/faceO.jpg)');
         	if ($(this).hasClass('unclicked')){
         		$(this).toggleClass('flag');
         	}
