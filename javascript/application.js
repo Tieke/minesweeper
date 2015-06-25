@@ -1,6 +1,7 @@
 function Minesweeper(side_length) {
 	this.gameboard = this.generateBoard(side_length);
 	this.directions = [[-1, -1], [-1, 0], [-1, 1], [0, -1], [0, 1], [1, -1], [1, 0], [1, 1]];
+	this.bombsLeftOnBoard = 0;
 }
 
 Minesweeper.prototype.prepareBoard = function(bomb_ratio) {
@@ -23,6 +24,7 @@ Minesweeper.prototype.addBombsToBoard = function(bomb_ratio) {
 		for ( j = 0; j < this.gameboard[i].length; j++ ) {
 			if (Math.random() > (1 - bomb_ratio)) {
 				this.gameboard[i][j] = 'b';
+				this.bombsLeftOnBoard += 1;
 			} else {
 				this.gameboard[i][j] = 0;
 			}
@@ -132,16 +134,18 @@ Minesweeper.prototype.unCoverClearSquares = function(row, column) {
 
 
 $(document).ready(function (){
+	var minesweeper;
 
 	$('#beginner').on('click', function(e){
 		e.preventDefault();
-		var minesweeper = new Minesweeper(8);
+		minesweeper = new Minesweeper(8);
 		minesweeper.prepareBoard(0.15625);
+		console.log(minesweeper.bombsLeftOnBoard);
 	});
 
 	$('#intermediate').on('click', function(e){
 		e.preventDefault();
-		var minesweeper = new Minesweeper(16);
+		minesweeper = new Minesweeper(16);
 		minesweeper.prepareBoard(0.15625);
 	});
 
@@ -164,6 +168,9 @@ $(document).ready(function (){
 	    	$('#face').css('background-image','url(images/faceO.jpg)');
         	if ($(this).hasClass('unclicked')){
         		$(this).toggleClass('flag');
+        		if ($(this).hasClass('bomb')){
+        			minesweeper.
+        		}
         	}
     	}
 	});
