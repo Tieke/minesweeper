@@ -1,17 +1,33 @@
-function Minesweeper() {
-	this.gameboard = this.generateBoard();
+function Minesweeper(side_length) {
+	this.gameboard = this.generateBoard(side_length);
 	this.directions = [[-1, -1], [-1, 0], [-1, 1], [0, -1], [0, 1], [1, -1], [1, 0], [1, 1]];
 }
 
+Minesweeper.prototype.prepareBoard = function(bomb_ratio) {
+	this.addBombsToBoard(bomb_ratio);
+	this.populateBoard();
+	this.renderBoard();
+}
 
-Minesweeper.prototype.generateBoard = function() {
-	var board = [
-				[0, 'b', 0],
-				['b', 0, 0],
-				[0, 0, 0]
-			];
+Minesweeper.prototype.generateBoard = function(side_length) {
+	var board = new Array();
+		for ( i = 0; i < side_length; i++ ) {
+			board.push(new Array(side_length));
+		}
 
 	return board;
+};
+
+Minesweeper.prototype.addBombsToBoard = function(bomb_ratio) {
+	for ( i = 0; i < this.gameboard.length; i++ ) {
+		for ( j = 0; j < this.gameboard[i].length; j++ ) {
+			if (Math.random() > (1 - bomb_ratio)) {
+				this.gameboard[i][j] = 'b';
+			} else {
+				this.gameboard[i][j] = 0;
+			}
+		}
+	}
 };
 
 Minesweeper.prototype.populateBoard = function() {
@@ -29,36 +45,37 @@ Minesweeper.prototype.renderBoard = function() {
 	for (i=0; i<this.gameboard.length; i++) {
 		printedBoard += "<div id='row" + (i+1) + "'>";
 		for (j=0;j<this.gameboard[i].length; j++) {
+			printedBoard += "<div class='cell" + (j+1) ;
 			switch(this.gameboard[i][j]){
 				case 0:
-				printedBoard += "<div class='unclicked zero'></div>";
+				printedBoard += " unclicked zero'></div>";
 				break;
 				case 1:
-				printedBoard += "<div class='unclicked one'></div>";
+				printedBoard += " unclicked one'></div>";
 				break;
 				case 2:
-				printedBoard += "<div class='unclicked two'></div>";
+				printedBoard += " unclicked two'></div>";
 				break;
 				case 3:
-				printedBoard += "<div class='unclicked three'></div>";
+				printedBoard += " unclicked three'></div>";
 				break;
 				case 4:
-				printedBoard += "<div class='unclicked four'></div>";
+				printedBoard += " unclicked four'></div>";
 				break;
 				case 5:
-				printedBoard += "<div class='unclicked five'></div>";
+				printedBoard += " unclicked five'></div>";
 				break;
 				case 6:
-				printedBoard += "<div class='unclicked six'></div>";
+				printedBoard += " unclicked six'></div>";
 				break;
 				case 7:
-				printedBoard += "<div class='unclicked seven'></div>";
+				printedBoard += " unclicked seven'></div>";
 				break;
 				case 8:
-				printedBoard += "<div class='unclicked eight'></div>";
+				printedBoard += " unclicked eight'></div>";
 				break;
 				case 'b':
-				printedBoard += "<div class='unclicked bomb'></div>";
+				printedBoard += " unclicked bomb'></div>";
 				break;
 			}
 		}
@@ -119,13 +136,35 @@ var timer = new (function() {
     $(init);
 });
 
+
+Minesweeper.prototype.unCoverClearSquares = function(row, column) {
+	var square = this.gameboard[row][column];
+	console.log("In function")
+	for ( var i= 0; i <= this.directions.length; i++) {
+
+		if (countBombsSurroundingSquare == 0) {// No neightbours has any bombs
+			$(this).removeClass('unclicked').addClass('clicked')
+			unCoverClearSquares($(this));
+		};
+
+	};
+};
+
 $(document).ready(function (){
-	var minesweeper = new Minesweeper();
-	minesweeper.populateBoard();
-	minesweeper.renderBoard();
+
+	$('#beginner').on('click', function(e){
+		e.preventDefault();
+		var minesweeper = new Minesweeper(8);
+		minesweeper.prepareBoard(0.15625);
+	});
+
+	$('#intermediate').on('click', function(e){
+		e.preventDefault();
+		var minesweeper = new Minesweeper(16);
+		minesweeper.prepareBoard(0.15625);
+	});
 
 	$('#board').on('mousedown', '.unclicked', function (event){
-
 		if (event.which === 1){
 			$('#face').css('background-image','url(images/faceSmile.jpg)');
 			$(this).removeClass('unclicked').addClass('clicked');
@@ -135,7 +174,7 @@ $(document).ready(function (){
 				$('.bomb').show()
 				alert('YOU LOSE')
 			};
-
+			minesweeper.unCoverClearSquares($(this));
 			if ($(this).hasClass()){
 				$(this).show();
 			};
