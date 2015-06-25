@@ -62,26 +62,22 @@ $(document).ready(function (){
 	var gameboard = minesweeper.generateBoard();
 	minesweeper.renderBoard(gameboard);
 
-	$('#board').on('click', '.unclicked', function (event){
-		switch (event.which) {
-	        case 1:
-				$(this).removeClass('unclicked').addClass('clicked');
-				if ($(this).hasClass('bomb')){
-					$('.bomb').show()
-					alert('YOU LOSE')
-				};
-				if ($(this).hasClass()){
-					$(this).show();
-				};
-	            break;
-	        case 3:
-	        	event.preventDefault();
-	        	if ($(this).hasClass('unclicked')){
-	        		$('.flag').toggle();
-	        	}
-	            break;
-	        default:
-            	alert('Something strange is happening!');
+	$('#board').on('mousedown', '.unclicked', function (event){
+
+		if (event.which === 1){
+			$(this).removeClass('unclicked').addClass('clicked');
+			if ($(this).hasClass('bomb')){
+				$('.bomb').show()
+				alert('YOU LOSE')
+			};
+			if ($(this).hasClass()){
+				$(this).show();
+			};
+		}		
+	    if (event.which === 3){
+        	if ($(this).hasClass('unclicked')){
+        		$(this).toggleClass('flag');
+        	}  
     	}
 	});
 
