@@ -86,6 +86,13 @@ Minesweeper.prototype.renderBoard = function() {
 	$('#board').append(printedBoard);
 }
 
+Minesweeper.prototype.bombsLeft = function() {
+	if ( this.bombsLeftOnBoard > 0 ) {
+		return true;
+	} else {
+		return false;
+	}
+};
 
 Minesweeper.prototype.squareContainsBomb = function(row, column) {
 	if ( this.gameboard[row][column] === 'b' ) {
@@ -120,8 +127,8 @@ Minesweeper.prototype.isInBounds = function(row, column) {
 };
 
 var timer = new (function() {
-    var $stopwatch, 
-        incrementTime = 70, 
+    var $stopwatch,
+        incrementTime = 70,
         currentTime = 0,
         updateTimer = function() {
             $stopwatch.html(formatTime(currentTime));
@@ -188,7 +195,11 @@ $(document).ready(function (){
         	if ($(this).hasClass('unclicked')){
         		$(this).toggleClass('flag');
         		if ($(this).hasClass('bomb')){
-        			minesweeper.
+        			minesweeper.bombsLeftOnBoard -= 1;
+        			if ( !minesweeper.bombsLeft ) {
+        				alert("Congratulations! You've won!");
+        				$('#face').css('background-image','url(images/faceWin.jpg)');
+        			}
         		}
         	}
     	}
