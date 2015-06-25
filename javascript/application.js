@@ -100,25 +100,42 @@ Minesweeper.prototype.isInBounds = function(row, column) {
   return row >= 0 && row < this.gameboard.length && column >= 0 && column < this.gameboard.length;
 };
 
+var timer = new (function() {
+    var $stopwatch, 
+        incrementTime = 70, 
+        currentTime = 0,
+        updateTimer = function() {
+            $stopwatch.html(formatTime(currentTime));
+            currentTime += incrementTime / 10;
+        },
+        init = function() {
+            $stopwatch = $('#stopwatch');
+            timer.Timer = $.timer(updateTimer, incrementTime, true);
+        };
+    this.resetStopwatch = function() {
+        currentTime = 0;
+        this.Timer.stop().once();
+    };
+    $(init);
+});
 
 $(document).ready(function (){
 	var minesweeper = new Minesweeper();
-	console.log(minesweeper.gameboard);
 	minesweeper.populateBoard();
-	console.log(minesweeper.gameboard)
 	minesweeper.renderBoard();
-	console.log(minesweeper.countBombsSurroundingSquare(0,0));
 
 	$('#board').on('mousedown', '.unclicked', function (event){
 
 		if (event.which === 1){
 			$('#face').css('background-image','url(images/faceSmile.jpg)');
 			$(this).removeClass('unclicked').addClass('clicked');
+
 			if ($(this).hasClass('bomb')){
 				$('#face').css('background-image','url(images/faceLose.jpg)');
 				$('.bomb').show()
 				alert('YOU LOSE')
 			};
+
 			if ($(this).hasClass()){
 				$(this).show();
 			};
