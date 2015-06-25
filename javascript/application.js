@@ -55,7 +55,6 @@ Minesweeper.prototype.renderBoard = function() {
 			}
 		}
 		printedBoard += "</div>";
-		console.log(printedBoard);
 	}
 	$('#board').append(printedBoard);
 }
