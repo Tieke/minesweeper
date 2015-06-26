@@ -135,16 +135,42 @@ Minesweeper.prototype.unCoverClearSquares = function(coordinates_array) {
 		if (this.isInBounds( rowId, cellId )) {
 			if (this.gameboard[rowId][cellId] === 0 ) {
 				var cellToChange = '#row'+rowId +' .cell'+cellId
-				console.log(cellToChange);
 				$(cellToChange).removeClass('unclicked').addClass('clicked')
 				this.gameboard[rowId][cellId] = 'X';
 				this.unCoverClearSquares([rowId,cellId]);
+
 			};
 		};
 				// 	var coordinates_array = [rowId,cellId];
 				// };
 	};
 };
+
+Minesweeper.prototype.unCoverNumberedSquares = function() {
+	for ( var i=0; i < this.gameboard.length; i++) {
+		for (var j=0; j < this.gameboard[i].length; j++) {
+			if (this.gameboard[i][j] === 'X' ) {
+				var cellToChange = '#row'+(i) +' .cell'+(j-1)
+				$(cellToChange).removeClass('unclicked').addClass('clicked')
+				var cellToChange1 = '#row'+(i) +' .cell'+(j+1)
+				$(cellToChange1).removeClass('unclicked').addClass('clicked')
+				var cellToChange = '#row'+(i-1) +' .cell'+(j-1)
+				$(cellToChange).removeClass('unclicked').addClass('clicked')
+				var cellToChange1 = '#row'+(i-1) +' .cell'+(j+1)
+				$(cellToChange1).removeClass('unclicked').addClass('clicked')
+				var cellToChange1 = '#row'+(i-1) +' .cell'+(j)
+				$(cellToChange1).removeClass('unclicked').addClass('clicked')
+				var cellToChange = '#row'+(i+1) +' .cell'+(j-1)
+				$(cellToChange).removeClass('unclicked').addClass('clicked')
+				var cellToChange1 = '#row'+(i+1) +' .cell'+(j+1)
+				$(cellToChange1).removeClass('unclicked').addClass('clicked')
+				var cellToChange1 = '#row'+(i+1) +' .cell'+(j)
+				$(cellToChange1).removeClass('unclicked').addClass('clicked')
+			};
+		};
+	};
+};
+
 
 Minesweeper.prototype.findCoordinates = function(current_this) {
 	var cell_id_temp = $(current_this).attr('class')
@@ -210,6 +236,7 @@ $(document).ready(function (){
 			};
 			var coordinates = minesweeper.findCoordinates($(this));
 			minesweeper.unCoverClearSquares(coordinates);
+			minesweeper.unCoverNumberedSquares();
 			// if ($(this).hasClass()){
 			// 	$(this).show();
 			// };
