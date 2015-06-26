@@ -45,9 +45,9 @@ Minesweeper.prototype.populateBoard = function() {
 Minesweeper.prototype.renderBoard = function() {
 	var printedBoard = "";
 	for (i=0; i<this.gameboard.length; i++) {
-		printedBoard += "<div id='row" + (i+1) + "'>";
+		printedBoard += "<div id='row" + (i) + "'>";
 		for (j=0;j<this.gameboard[i].length; j++) {
-			printedBoard += "<div class='cell" + (j+1) ;
+			printedBoard += "<div class='cell" + (j) ;
 			switch(this.gameboard[i][j]){
 				case 0:
 				printedBoard += " unclicked zero'></div>";
@@ -120,24 +120,39 @@ Minesweeper.prototype.isInBounds = function(row, column) {
 
 
 
-Minesweeper.prototype.unCoverClearSquares = function(row, column) {
-	var square = this.gameboard[row][column];
-	console.log("In function")
-	for ( var i= 0; i <= this.directions.length; i++) {
-
-		if (minesweeper.countBombsSurroundingSquare(row, column) == 0) {// No neightbours has any bombs
-			$(this).removeClass('unclicked').addClass('clicked')
-			unCoverClearSquares($(this));
+Minesweeper.prototype.unCoverClearSquares = function(coordinates_array) {
+	// var square = this.gameboard[row][column];
+	var row_id = coordinates_array[0];
+	var cell_id = coordinates_array[1];
+	console.log(row_id);
+	console.log(cell_id);
+	for ( var i= 0; i < this.directions.length; i++) {
+		var direction = this.directions[i];
+		var rowId = row_id + direction[0];
+		var  cellId = cell_id + direction[1];
+		console.log(rowId);
+		console.log(cellId);
+		if (this.isInBounds( rowId, cellId )) {
+			if (this.gameboard[rowId][cellId] === 0 ) {
+				var cellToChange = '#row'+rowId +' .cell'+cellId
+				console.log(cellToChange);
+				$(cellToChange).removeClass('unclicked').addClass('clicked')
+				this.gameboard[rowId][cellId] = 'X';
+				this.unCoverClearSquares([rowId,cellId]);
+			};
 		};
-
+				// 	var coordinates_array = [rowId,cellId];
+				// };
 	};
 };
 
 Minesweeper.prototype.findCoordinates = function(current_this) {
 	var cell_id_temp = $(current_this).attr('class')
-	var cell_id = "cell" + (cell_id_temp[4]) + (cell_id_temp[5])
-	var row_id = $(current_this).parent().attr('id');
-	return cell_id, row_id
+	var cell_id = parseInt(cell_id_temp[4]);
+	var row_id_temp = $(current_this).parent().attr('id');
+	var row_id = parseInt(row_id_temp[3]);
+	var coordinates_array = [row_id,cell_id];
+	return coordinates_array;
 };
 
 
@@ -193,11 +208,11 @@ $(document).ready(function (){
 				StopTimer()
 				alert('YOU LOSE')
 			};
-			minesweeper.findCoordinates($(this));
-			minesweeper.unCoverClearSquares($(this));
-			if ($(this).hasClass()){
-				$(this).show();
-			};
+			var coordinates = minesweeper.findCoordinates($(this));
+			minesweeper.unCoverClearSquares(coordinates);
+			// if ($(this).hasClass()){
+			// 	$(this).show();
+			// };
 		}
 	    if (event.which === 3){
 	    	$('#face').css('background-image','url(images/faceO_small.jpg)');
