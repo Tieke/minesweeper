@@ -171,12 +171,14 @@ $(document).ready(function (){
 
 	$('#beginner').on('click', function(e){
 		e.preventDefault();
+		$('#board').text("");
 		minesweeper = new Minesweeper(8);
 		minesweeper.prepareBoard(0.15625);
 	});
 
 	$('#intermediate').on('click', function(e){
 		e.preventDefault();
+		$('#board').text("");
 		minesweeper = new Minesweeper(16);
 		minesweeper.prepareBoard(0.15625);
 	});

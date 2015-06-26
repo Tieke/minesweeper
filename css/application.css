@@ -1,3 +1,21 @@
+#difficulty {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 150px;
+	background-color: #FFFFE8;
+	height: 100%;
+}
+
+#difficulty a {
+	text-decoration: none;
+	display: inline-block;
+}
+
+#difficulty li {
+	list-style: none;
+}
+
 .unclicked,
 .clicked,
 #row1,
@@ -17,8 +35,7 @@
 #face {
 	width: 75px;
 	height: 75px;
-	margin-left: 46.5%;
-	margin-top: 100px;
+	margin: 100px auto 20px;
 	background-image: url('../images/faceSmile.jpg');
 	background-position: center;
 	background-repeat: no-repeat;
@@ -26,8 +43,9 @@
 
 #board {
 	height: 100%;
-	margin-left: 10%;
-	margin-top: 100px;
+	width: 800px;
+	margin: 100px auto;
+	text-align: center;
 }
 
 #row1, #row2, #row3 {
