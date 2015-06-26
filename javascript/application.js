@@ -118,24 +118,6 @@ Minesweeper.prototype.isInBounds = function(row, column) {
   return row >= 0 && row < this.gameboard.length && column >= 0 && column < this.gameboard.length;
 };
 
-var timer = new (function() {
-    var $stopwatch,
-        incrementTime = 70,
-        currentTime = 0,
-        updateTimer = function() {
-            $stopwatch.html(formatTime(currentTime));
-            currentTime += incrementTime / 10;
-        },
-        init = function() {
-            $stopwatch = $('#stopwatch');
-            timer.Timer = $.timer(updateTimer, incrementTime, true);
-        };
-    this.resetStopwatch = function() {
-        currentTime = 0;
-        this.Timer.stop().once();
-    };
-    $(init);
-});
 
 
 Minesweeper.prototype.unCoverClearSquares = function(row, column) {
@@ -187,6 +169,20 @@ $(document).ready(function (){
 		minesweeper.prepareBoard(0.15625);
 	});
 
+	var timer
+
+	$('#board').one('click', function() {
+		var userScore = 0 
+  		timer = setInterval(function(){ 
+			userScore ++; 
+			$("#score").text(userScore);
+		}, 1000);
+	});
+
+	function StopTimer() {
+    	clearTimeout(timer);
+	}
+
 	$('#board').on('mousedown', '.unclicked', function (event){
 		if (event.which === 1){
 			$('#face').css('background-image','url(images/faceSmile_small.jpg)');
@@ -194,7 +190,7 @@ $(document).ready(function (){
 			if ($(this).hasClass('bomb')){
 				$('#face').css('background-image','url(images/faceLose_small.jpg)');
 				$('.bomb').show()
-				timer.pause();
+				StopTimer()
 				alert('YOU LOSE')
 			};
 			minesweeper.findCoordinates($(this));
