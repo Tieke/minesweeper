@@ -174,9 +174,9 @@ Minesweeper.prototype.unCoverNumberedSquares = function() {
 
 Minesweeper.prototype.findCoordinates = function(current_this) {
 	var cell_id_temp = $(current_this).attr('class')
-	var cell_id = parseInt(cell_id_temp[4]);
+	var cell_id = parseInt(cell_id_temp[4] + cell_id_temp[5]) ;
 	var row_id_temp = $(current_this).parent().attr('id');
-	var row_id = parseInt(row_id_temp[3]);
+	var row_id = parseInt(row_id_temp[3] + row_id_temp[4]);
 	var coordinates_array = [row_id,cell_id];
 	return coordinates_array;
 };
