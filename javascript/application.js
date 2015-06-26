@@ -166,12 +166,12 @@ $(document).ready(function (){
 	});
 
 	var timer
-	
+
 	$('#board').one('click', function() {
 		var userScore = 0 
   		timer = setInterval(function(){ 
 			userScore ++; 
-			$("#stopwatch").text(userScore);
+			$("#score").text(userScore);
 		}, 1000);
 	});
 
