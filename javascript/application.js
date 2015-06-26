@@ -171,6 +171,8 @@ $(document).ready(function (){
 
 	$('#beginner').on('click', function(e){
 		e.preventDefault();
+		$('#intermediate').removeClass('selected');
+		$(this).addClass('selected');
 		$('#board').text("");
 		minesweeper = new Minesweeper(8);
 		minesweeper.prepareBoard(0.15625);
@@ -178,6 +180,8 @@ $(document).ready(function (){
 
 	$('#intermediate').on('click', function(e){
 		e.preventDefault();
+		$('#beginner').removeClass('selected');
+		$(this).addClass('selected');
 		$('#board').text("");
 		minesweeper = new Minesweeper(16);
 		minesweeper.prepareBoard(0.15625);
@@ -185,10 +189,10 @@ $(document).ready(function (){
 
 	$('#board').on('mousedown', '.unclicked', function (event){
 		if (event.which === 1){
-			$('#face').css('background-image','url(images/faceSmile.jpg)');
+			$('#face').css('background-image','url(images/faceSmile_small.jpg)');
 			$(this).removeClass('unclicked').addClass('clicked');
 			if ($(this).hasClass('bomb')){
-				$('#face').css('background-image','url(images/faceLose.jpg)');
+				$('#face').css('background-image','url(images/faceLose_small.jpg)');
 				$('.bomb').show()
 				timer.pause();
 				alert('YOU LOSE')
@@ -200,14 +204,14 @@ $(document).ready(function (){
 			};
 		}
 	    if (event.which === 3){
-	    	$('#face').css('background-image','url(images/faceO.jpg)');
+	    	$('#face').css('background-image','url(images/faceO_small.jpg)');
         	if ($(this).hasClass('unclicked')){
         		$(this).toggleClass('flag');
         		if ($(this).hasClass('bomb')){
         			minesweeper.bombsLeftOnBoard -= 1;
         			if ( minesweeper.bombsLeftOnBoard === 0 ) {
         				alert("Congratulations! You've won!");
-        				$('#face').css('background-image','url(images/faceWin.jpg)');
+        				$('#face').css('background-image','url(images/faceWin_small.jpg)');
         			}
         		}
         	}

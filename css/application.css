@@ -1,19 +1,50 @@
+body {
+	background-color: #E8F1FF;
+}
+
 #difficulty {
 	position: fixed;
 	top: 0;
 	left: 0;
-	width: 150px;
-	background-color: #FFFFE8;
+	width: 180px;
+	background-color: #B9D5FF;
 	height: 100%;
+	padding: 0;
+	margin: 0;
+	box-shadow: 2px 2px 5px gray;
 }
 
 #difficulty a {
 	text-decoration: none;
 	display: inline-block;
+	padding: 5px;
+	margin: 10px;
+	color: #0053D1;
+	font-family: 'Oswald', sans-serif;
+}
+
+#difficulty ul {
+	padding: 0;
+	text-align: center;
 }
 
 #difficulty li {
 	list-style: none;
+}
+
+.selected {
+	border: 1px solid #0053D1;
+	border-radius: 4px;
+	background-color: #E8F1FF;
+}
+
+#stopwatch {
+	margin: 10px;
+	padding: 10px 10px 20px;
+	text-align: center;
+	border-bottom: 1px solid #0053D1;
+	color: #0053D1;
+	/*font-family: 'Oswald', sans-serif;*/
 }
 
 .unclicked,
@@ -36,7 +67,7 @@
 	width: 75px;
 	height: 75px;
 	margin: 100px auto 20px;
-	background-image: url('../images/faceSmile.jpg');
+	background-image: url('../images/faceSmile_small.jpg');
 	background-position: center;
 	background-repeat: no-repeat;
 }
