@@ -190,6 +190,7 @@ $(document).ready(function (){
 			if ($(this).hasClass('bomb')){
 				$('#face').css('background-image','url(images/faceLose.jpg)');
 				$('.bomb').show()
+				timer.pause();
 				alert('YOU LOSE')
 			};
 			minesweeper.findCoordinates($(this));
