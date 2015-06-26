@@ -118,24 +118,6 @@ Minesweeper.prototype.isInBounds = function(row, column) {
   return row >= 0 && row < this.gameboard.length && column >= 0 && column < this.gameboard.length;
 };
 
-var timer = new (function() {
-    var $stopwatch,
-        incrementTime = 70,
-        currentTime = 0,
-        updateTimer = function() {
-            $stopwatch.html(formatTime(currentTime));
-            currentTime += incrementTime / 10;
-        },
-        init = function() {
-            $stopwatch = $('#stopwatch');
-            timer.Timer = $.timer(updateTimer, incrementTime, true);
-        };
-    this.resetStopwatch = function() {
-        currentTime = 0;
-        this.Timer.stop().once();
-    };
-    $(init);
-});
 
 
 Minesweeper.prototype.unCoverClearSquares = function(coordinates_array) {
@@ -186,23 +168,44 @@ $(document).ready(function (){
 
 	$('#beginner').on('click', function(e){
 		e.preventDefault();
+		$('#intermediate').removeClass('selected');
+		$(this).addClass('selected');
+		$('#board').text("");
 		minesweeper = new Minesweeper(8);
 		minesweeper.prepareBoard(0.15625);
 	});
 
 	$('#intermediate').on('click', function(e){
 		e.preventDefault();
+		$('#beginner').removeClass('selected');
+		$(this).addClass('selected');
+		$('#board').text("");
 		minesweeper = new Minesweeper(16);
 		minesweeper.prepareBoard(0.15625);
 	});
 
+	var timer
+
+	$('#board').one('click', function() {
+		var userScore = 0 
+  		timer = setInterval(function(){ 
+			userScore ++; 
+			$("#score").text(userScore);
+		}, 1000);
+	});
+
+	function StopTimer() {
+    	clearTimeout(timer);
+	}
+
 	$('#board').on('mousedown', '.unclicked', function (event){
 		if (event.which === 1){
-			$('#face').css('background-image','url(images/faceSmile.jpg)');
+			$('#face').css('background-image','url(images/faceSmile_small.jpg)');
 			$(this).removeClass('unclicked').addClass('clicked');
 			if ($(this).hasClass('bomb')){
-				$('#face').css('background-image','url(images/faceLose.jpg)');
+				$('#face').css('background-image','url(images/faceLose_small.jpg)');
 				$('.bomb').show()
+				StopTimer()
 				alert('YOU LOSE')
 			};
 			var coordinates = minesweeper.findCoordinates($(this));
@@ -212,14 +215,14 @@ $(document).ready(function (){
 			// };
 		}
 	    if (event.which === 3){
-	    	$('#face').css('background-image','url(images/faceO.jpg)');
+	    	$('#face').css('background-image','url(images/faceO_small.jpg)');
         	if ($(this).hasClass('unclicked')){
         		$(this).toggleClass('flag');
         		if ($(this).hasClass('bomb')){
         			minesweeper.bombsLeftOnBoard -= 1;
         			if ( minesweeper.bombsLeftOnBoard === 0 ) {
         				alert("Congratulations! You've won!");
-        				$('#face').css('background-image','url(images/faceWin.jpg)');
+        				$('#face').css('background-image','url(images/faceWin_small.jpg)');
         			}
         		}
         	}
