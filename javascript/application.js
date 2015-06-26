@@ -151,22 +151,41 @@ $(document).ready(function (){
 	// 	minesweeper.prepareBoard(0.15625);
 	// });
 
-	$('#beginner').on('click', function(e){
-		e.preventDefault();
+	$('#face').on('click', function(){
+		if ($('#beginner').hasClass('selected')){
+			setBeginner();
+		}
+
+		if ($('#intermediate').hasClass('selected')){
+			setIntermediate();
+		}
+	});
+
+
+	function setBeginner(){
 		$('#intermediate').removeClass('selected');
-		$(this).addClass('selected');
+		$('#beginner').addClass('selected');
 		$('#board').text("");
 		minesweeper = new Minesweeper(8);
 		minesweeper.prepareBoard(0.15625);
+	}
+
+	function setIntermediate(){
+		$('#beginner').removeClass('selected');
+		$('#intermediate').addClass('selected');
+		$('#board').text("");
+		minesweeper = new Minesweeper(16);
+		minesweeper.prepareBoard(0.15625);
+	}
+
+	$('#beginner').on('click', function(e){
+		e.preventDefault();
+		setBeginner();
 	});
 
 	$('#intermediate').on('click', function(e){
 		e.preventDefault();
-		$('#beginner').removeClass('selected');
-		$(this).addClass('selected');
-		$('#board').text("");
-		minesweeper = new Minesweeper(16);
-		minesweeper.prepareBoard(0.15625);
+		setIntermediate();
 	});
 
 	var timer
@@ -193,8 +212,8 @@ $(document).ready(function (){
 				StopTimer()
 				alert('YOU LOSE')
 			};
-			minesweeper.findCoordinates($(this));
-			minesweeper.unCoverClearSquares($(this));
+			// minesweeper.findCoordinates($(this));
+			// minesweeper.unCoverClearSquares($(this));
 			if ($(this).hasClass()){
 				$(this).show();
 			};
